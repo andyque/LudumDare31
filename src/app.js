@@ -2,6 +2,7 @@
 var HelloWorldLayer = cc.Layer.extend({
     bird_ : null,
     stabs_ : [],
+    pickItems_: [],
     initGame : function(){
         var visibleRect = cc.visibleRect;
 
@@ -15,6 +16,11 @@ var HelloWorldLayer = cc.Layer.extend({
         this.addChild(stab);
 
         this.stabs_.push(stab);
+
+        //add pickItem
+        var pickItem = new PickItem();
+        this.addChild(pickItem);
+        this.pickItems_.push(pickItem);
 
         this.bird_ = new Bird();
         this.addChild(this.bird_);
@@ -73,6 +79,16 @@ var HelloWorldLayer = cc.Layer.extend({
                 this.bird_.hurt();
             }
 
+        }
+
+        //check bird and pickItem collision
+        for(var i = 0; i < this.pickItems_.length; ++i){
+            var item = this.pickItems_[i];
+            var itemBB = item.getSprite().getBoundingBox();
+            if(item.isActive() &&cc.rectIntersectsRect(itemBB,birdBoundingBox)){
+                this.bird_.heal();
+                item.inActivate();
+            }
         }
 
 

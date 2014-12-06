@@ -105,6 +105,10 @@ var Bird = cc.Node.extend({
 
     },
 
+    heal : function(factor){
+        this.blood_ += factor;
+    },
+
     reset : function(){
         this.isDead_ = false;
         this.px_ = 0;
