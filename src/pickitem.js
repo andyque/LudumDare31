@@ -17,6 +17,7 @@ var PickItem = cc.Node.extend({
     ctor : function(dt){
         this._super();
         this.sprite_ = new cc.Sprite(res.item1_png);
+        this.sprite_.setScale(0.6);
         this.sprite_.setPosition(cc.winSize.width/2, cc.winSize.height/1.5);
         this.addChild(this.sprite_);
 

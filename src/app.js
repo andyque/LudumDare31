@@ -1,7 +1,7 @@
 
 var HelloWorldLayer = cc.Layer.extend({
     bird_ : null,
-    stabs_ : [],
+//    stabs_ : [],
     pickItems_: [],
     gameTime_ : 0,
     gameTimeLabel_ : null,
@@ -33,10 +33,10 @@ var HelloWorldLayer = cc.Layer.extend({
         var startPosition = new cc.Point(birdHealthLabel.getPosition().x + healthLabelSize.width/2 + 25,
                                 birdHealthLabel.getPosition().y);
         for(var i = 0; i < 10; ++i){
-            var lifeSprite = new cc.Sprite(res.bird_png);
+            var lifeSprite = new cc.Sprite(res.item1_png);
             var lifeSpriteSize = lifeSprite.getContentSize();
             var step = lifeSpriteSize.width * 0.2 + 2;
-            lifeSprite.setScale(0.2);
+            lifeSprite.setScale(0.4);
             lifeSprite.setPosition(startPosition.x + i * step, startPosition.y);
             this.addChild(lifeSprite);
             lifeSprite.setVisible(false);
@@ -60,12 +60,12 @@ var HelloWorldLayer = cc.Layer.extend({
         bgSprite.setPosition(visibleRect.width/2, visibleRect.height/2);
         this.addChild(bgSprite);
 
-        //todo: add all stabs
-        var stab = new Stab();
-        stab.getSprite().setPosition(0,0);
-        this.addChild(stab);
-
-        this.stabs_.push(stab);
+//        //todo: add all stabs
+//        var stab = new Stab();
+//        stab.getSprite().setPosition(0,0);
+//        this.addChild(stab);
+//
+//        this.stabs_.push(stab);
 
         //add pickItem
         var pickItemCount = 5;
@@ -143,16 +143,18 @@ var HelloWorldLayer = cc.Layer.extend({
             this.bird_.getSprite().setPosition(birdBounds.width/2, pos.y);
         }
 
-        //check bird and stab collision
         var birdBoundingBox = this.bird_.getSprite().getBoundingBox();
-        for (var i = 0; i < this.stabs_.length; ++i){
-            var stab = this.stabs_[i];
-            var stabBoundingBox = stab.getBoundingBox();
-            if(cc.rectIntersectsRect(stabBoundingBox,birdBoundingBox)){
-                this.bird_.hurt(1.0);
-            }
 
-        }
+
+//        //check bird and stab collision
+//        for (var i = 0; i < this.stabs_.length; ++i){
+//            var stab = this.stabs_[i];
+//            var stabBoundingBox = stab.getBoundingBox();
+//            if(cc.rectIntersectsRect(stabBoundingBox,birdBoundingBox)){
+//                this.bird_.hurt(1.0);
+//            }
+//
+//        }
 
         //check bird and pickItem collision
         for(var i = 0; i < this.pickItems_.length; ++i){
