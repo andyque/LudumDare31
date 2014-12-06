@@ -23,7 +23,7 @@ var Bird = cc.Node.extend({
     hurtTime_ : 0,
     level_ : 1,
     powerup_ : 0, //used as self upgrade
-    powerupConfig : [3, 5, 7, 9],
+    powerupConfig : [1, 2, 3, 4],
     levelMaxBlood_ : [1,3,5,7,10],
     ctor : function(){
 
@@ -86,7 +86,6 @@ var Bird = cc.Node.extend({
         }
 
         this.py_ = JUMP_POWER;
-        this.selfUpgrade();
     },
 
     collideWithWall : function(){
@@ -128,10 +127,21 @@ var Bird = cc.Node.extend({
     },
 
     heal : function(factor){
+        var maxBlood = this.levelMaxBlood_[this.level_ - 1];
         this.blood_ += factor;
-        if(this.blood_ >= this.maxBlood_){
-            this.blood_ = this.maxBlood_;
+        if(this.blood_ >= maxBlood){
+            this.blood_ = maxBlood;
         }
+    },
+
+    powerup : function(){
+        this.powerup_ += 1;
+        var levelup = this.powerupConfig[this.level_ - 1];
+        if(this.powerup_ == levelup){
+            this.powerup_ = 0;
+            this.level_ += 1;
+        }
+
     },
 
     reset : function(){

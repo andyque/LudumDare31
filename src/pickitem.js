@@ -5,13 +5,15 @@
 var ACTIVE_DURATION=3;
 var INACTIVE_DURATION_MAX=16;
 var INACTIVE_DURATION_MIN=5;
+PickItemType = { RICE : 1, WORM : 2};
 
 var PickItem = cc.Node.extend({
     sprite_ : null,
     active_ : true,
     activeInterval_ : 0,
     inativeInterval_ : 0,
-
+    type_ : PickItemType.RICE,
+    healValue_ : 1,
     ctor : function(dt){
         this._super();
         this.sprite_ = new cc.Sprite(res.item1_png);
@@ -21,6 +23,9 @@ var PickItem = cc.Node.extend({
         this.inActivate();
         this.inativeInterval_ = dt;
 
+    },
+    getHealValue : function(){
+        return this.healValue_;
     },
     randomPosition : function(){
         var spriteContentSize = this.sprite_.getContentSize();
@@ -32,7 +37,7 @@ var PickItem = cc.Node.extend({
        if(this.active_){
            this.activeInterval_ +=dt;
            if(this.activeInterval_ > ACTIVE_DURATION){
-               this.inActivate();
+               if(this.type_ == PickItemType.RICE)  this.inActivate();
            }
        }else{
            this.inativeInterval_ += dt;

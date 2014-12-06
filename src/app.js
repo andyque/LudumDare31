@@ -44,6 +44,13 @@ var HelloWorldLayer = cc.Layer.extend({
 
         }
 
+        //display bird life
+        var birdLife = this.bird_.blood_;
+        for(var i = 0; i < birdLife; ++i){
+            var lifeSprite = this.lifeSpriteArray_[i];
+            lifeSprite.setVisible(true);
+        }
+
     },
     initGame : function(){
         var visibleRect = cc.visibleRect;
@@ -67,6 +74,11 @@ var HelloWorldLayer = cc.Layer.extend({
             this.pickItems_.push(pickItem);
         }
 
+        var pickItem = new PickItem(0);
+        this.addChild(pickItem);
+        pickItem.type_ = PickItemType.WORM;
+        pickItem.getSprite().setColor(cc.color(255,0,0,255));
+        this.pickItems_.push(pickItem);
 
         this.bird_ = new Bird();
         this.addChild(this.bird_);
@@ -139,18 +151,23 @@ var HelloWorldLayer = cc.Layer.extend({
             var item = this.pickItems_[i];
             var itemBB = item.getSprite().getBoundingBox();
             if(item.isActive() &&cc.rectIntersectsRect(itemBB,birdBoundingBox)){
-                this.bird_.heal(1.0);
+                if(item.type_ == PickItemType.RICE){
+                    this.bird_.heal(item.getHealValue());
+                }else if(item.type_ == PickItemType.WORM){
+                    this.bird_.powerup();
+                }
                 item.inActivate();
             }
         }
 
 
     },
-    updateHUD : function(dt){
+    updateTimerHUD : function(dt){
         this.gameTime_ += dt;
 
         this.gameTimeLabel_.setString(Math.round(this.gameTime_));
-
+    },
+    updateHUD : function(dt){
         for(var i = 0; i < 10; ++i){
             var lifeSprite = this.lifeSpriteArray_[i];
             lifeSprite.setVisible(false);
@@ -167,13 +184,20 @@ var HelloWorldLayer = cc.Layer.extend({
     update : function(dt){
         this.updateHUD(dt);
 
+
         if(!this.isGameStart_){
             return;
         }
+
+
         if(this.bird_.isDead_){
             cc.log("game over");
             return;
         }
+
+        this.updateTimerHUD(dt);
+
+
         for(var i = 0; i < this.pickItems_.length; ++i){
             this.pickItems_[i].update(dt);
         }
