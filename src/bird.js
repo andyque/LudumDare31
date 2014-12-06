@@ -4,6 +4,10 @@
 
 var FacingDirection = { FD_Left : 1, FD_Right : 2}
 var HURTING_INTERVAL = 1;
+var HIT_TOP_BOUNCING = -20;
+var FALLING_GRAVITY = -1000;
+var JUMP_POWER = 533;
+var BOUNCING_POWER = 220;
 
 var Bird = cc.Node.extend({
     sprite_ : null,
@@ -13,7 +17,7 @@ var Bird = cc.Node.extend({
     py_ : 0,
     accelerationY_ : 0,
     flyAnimation_ : null,
-    blood_ : 100,
+    blood_ : 10,
     isHurting_ : true,
     hurtTime_ : 0,
     ctor : function(){
@@ -28,13 +32,16 @@ var Bird = cc.Node.extend({
 
         return true;
     },
-    jump : function(){
-        var jumpAction = new cc.JumpBy(1.0,this.sprite_.getPosition(),20,1);
-        this.sprite_.runAction(jumpAction);
-    },
+
     update : function(dt){
         if(this.isDead_){
+            cc.log("dead")
             return;
+        }
+
+        //fixme
+        if(dt <= 0){
+            dt = 1.0/60;
         }
 
         if(!this.isHurting_){
@@ -50,9 +57,16 @@ var Bird = cc.Node.extend({
         pt.x += this.px_ * dt;
         pt.y += this.py_ * dt;
 
+        //don't let bird fall out of screen
         var halfHeight = this.sprite_.getContentSize().height/2;
         if(pt.y  <= halfHeight ){
             pt.y = halfHeight;
+        }
+
+        //don't let bird jump out of screen
+        if(pt.y >= cc.winSize.height - halfHeight){
+            this.py_ = HIT_TOP_BOUNCING;
+            pt.y = cc.winSize.height - halfHeight;
         }
 
         this.sprite_.setPosition(pt);
@@ -60,11 +74,11 @@ var Bird = cc.Node.extend({
 
     tap : function(){
         if(this.accelerationY_ == 0){
-            this.accelerationY_ = -1333;
-            this.px_ = 220;
+            this.accelerationY_ = FALLING_GRAVITY;
+            this.px_ = BOUNCING_POWER;
         }
 
-        this.py_ = 533.0;
+        this.py_ = JUMP_POWER;
     },
 
     collideWithWall : function(){

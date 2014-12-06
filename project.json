@@ -2,7 +2,7 @@
     "project_type": "javascript",
 
     "debugMode" : 1,
-    "showFPS" : true,
+    "showFPS" : false,
     "frameRate" : 60,
     "id" : "gameCanvas",
     "renderMode" : 0,
@@ -15,6 +15,7 @@
         "src/app.js",
         "src/bird.js",
         "src/stab.js",
-        "src/pickitem.js"
+        "src/pickitem.js",
+        "src/levelManager.js"
     ]
 }

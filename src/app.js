@@ -18,9 +18,13 @@ var HelloWorldLayer = cc.Layer.extend({
         this.stabs_.push(stab);
 
         //add pickItem
-        var pickItem = new PickItem();
-        this.addChild(pickItem);
-        this.pickItems_.push(pickItem);
+        var pickItemCount = 5;
+        for(var i = 0; i < pickItemCount; ++i ){
+            var pickItem = new PickItem(i);
+            this.addChild(pickItem);
+            this.pickItems_.push(pickItem);
+        }
+
 
         this.bird_ = new Bird();
         this.addChild(this.bird_);
@@ -65,9 +69,13 @@ var HelloWorldLayer = cc.Layer.extend({
         var birdBounds = this.bird_.getSprite().getContentSize();
         var boundSize = cc.winSize;
 
-        if(pos.x+birdBounds.width/2 > boundSize.width ||
-            (pos.x - birdBounds.width/2 < 0)){
+        if(pos.x >= boundSize.width - birdBounds.width/2){
             this.bird_.changeFacing();
+            this.bird_.getSprite().setPosition(boundSize.width - birdBounds.width/2, pos.y);
+        }
+        if(pos.x  <= birdBounds.width/2){
+            this.bird_.changeFacing();
+            this.bird_.getSprite().setPosition(birdBounds.width/2, pos.y);
         }
 
         //check bird and stab collision
@@ -76,7 +84,7 @@ var HelloWorldLayer = cc.Layer.extend({
             var stab = this.stabs_[i];
             var stabBoundingBox = stab.getBoundingBox();
             if(cc.rectIntersectsRect(stabBoundingBox,birdBoundingBox)){
-                this.bird_.hurt();
+                this.bird_.hurt(1.0);
             }
 
         }
@@ -86,7 +94,7 @@ var HelloWorldLayer = cc.Layer.extend({
             var item = this.pickItems_[i];
             var itemBB = item.getSprite().getBoundingBox();
             if(item.isActive() &&cc.rectIntersectsRect(itemBB,birdBoundingBox)){
-                this.bird_.heal();
+                this.bird_.heal(1.0);
                 item.inActivate();
             }
         }
@@ -95,8 +103,18 @@ var HelloWorldLayer = cc.Layer.extend({
     },
 
     update : function(dt){
-        this.bird_.update(dt);
+        if(this.bird_.isDead_){
+            cc.log("game over");
+            return;
+        }
+        for(var i = 0; i < this.pickItems_.length; ++i){
+            this.pickItems_[i].update(dt);
+        }
+
         this.checkBirdCollision(dt);
+
+        this.bird_.update(dt);
+
     }
 });
 
