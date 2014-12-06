@@ -1,7 +1,7 @@
 
 var HelloWorldLayer = cc.Layer.extend({
     bird_ : null,
-//    stabs_ : [],
+    stabs_ : [],
     pickItems_: [],
     gameTime_ : 0,
     gameTimeLabel_ : null,
@@ -61,11 +61,11 @@ var HelloWorldLayer = cc.Layer.extend({
         this.addChild(bgSprite);
 
 //        //todo: add all stabs
-//        var stab = new Stab();
-//        stab.getSprite().setPosition(0,0);
-//        this.addChild(stab);
-//
-//        this.stabs_.push(stab);
+        var stab = new Stab();
+        stab.getSprite().setPosition(0,0);
+        this.addChild(stab);
+
+        this.stabs_.push(stab);
 
         //add pickItem
         var pickItemCount = 5;
@@ -147,14 +147,14 @@ var HelloWorldLayer = cc.Layer.extend({
 
 
 //        //check bird and stab collision
-//        for (var i = 0; i < this.stabs_.length; ++i){
-//            var stab = this.stabs_[i];
-//            var stabBoundingBox = stab.getBoundingBox();
-//            if(cc.rectIntersectsRect(stabBoundingBox,birdBoundingBox)){
-//                this.bird_.hurt(1.0);
-//            }
-//
-//        }
+        for (var i = 0; i < this.stabs_.length; ++i){
+            var stab = this.stabs_[i];
+            var stabBoundingBox = stab.getBoundingBox();
+            if(cc.rectIntersectsRect(stabBoundingBox,birdBoundingBox)){
+                this.bird_.hurt(1.0);
+            }
+
+        }
 
         //check bird and pickItem collision
         for(var i = 0; i < this.pickItems_.length; ++i){

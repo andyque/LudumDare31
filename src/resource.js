@@ -2,7 +2,8 @@ var res = {
     background_png : "res/images/background.png",
     bird_png : "res/images/bird1.png",
     item1_png : "res/images/rice.png",
-    monster1_png : "res/images/cat.png"
+    monster1_png : "res/images/cat.png",
+    stab_png : "res/images/down_dents.png"
 };
 
 var g_resources = [];
