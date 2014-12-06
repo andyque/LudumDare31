@@ -3,6 +3,7 @@
  */
 
 var FacingDirection = { FD_Left : 1, FD_Right : 2}
+var HURTING_INTERVAL = 1;
 
 var Bird = cc.Node.extend({
     sprite_ : null,
@@ -12,6 +13,9 @@ var Bird = cc.Node.extend({
     py_ : 0,
     accelerationY_ : 0,
     flyAnimation_ : null,
+    blood_ : 100,
+    isHurting_ : true,
+    hurtTime_ : 0,
     ctor : function(){
 
         this._super();
@@ -33,10 +37,23 @@ var Bird = cc.Node.extend({
             return;
         }
 
+        if(!this.isHurting_){
+            this.hurtTime_ += dt;
+            if(this.hurtTime_ > HURTING_INTERVAL){
+                this.isHurting_ = true;
+                this.hurtTime_ = 0;
+            }
+        }
+
         this.py_ += this.accelerationY_ * dt;
         var pt = this.sprite_.getPosition();
         pt.x += this.px_ * dt;
         pt.y += this.py_ * dt;
+
+        var halfHeight = this.sprite_.getContentSize().height/2;
+        if(pt.y  <= halfHeight ){
+            pt.y = halfHeight;
+        }
 
         this.sprite_.setPosition(pt);
     },
@@ -74,6 +91,18 @@ var Bird = cc.Node.extend({
 
     die : function(){
         this.isDead_ = true;
+    },
+
+    hurt : function(factor){
+        if(this.isHurting_){
+            this.blood_ = this.blood_ - factor;
+            this.isHurting_ = false;
+            cc.log("hurt")
+            if(this.blood_ <= 0){
+                this.die();
+            }
+        }
+
     },
 
     reset : function(){

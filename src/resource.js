@@ -1,6 +1,7 @@
 var res = {
     background_png : "res/images/background.png",
-    bird_png : "res/images/bird_open1.png"
+    bird_png : "res/images/bird_open1.png",
+    stab_png : "res/images/down_dents.png",
 
 };
 
