@@ -16,6 +16,7 @@
         "src/bird.js",
         "src/stab.js",
         "src/pickitem.js",
-        "src/levelManager.js"
+        "src/levelManager.js",
+        "src/monster.js"
     ]
 }

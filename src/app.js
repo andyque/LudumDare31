@@ -7,6 +7,7 @@ var HelloWorldLayer = cc.Layer.extend({
     gameTimeLabel_ : null,
     isGameStart_ : false,
     lifeSpriteArray_ : [],
+    monsters_ : [],
     initHUD : function(){
         var winSize = cc.winSize;
 
@@ -83,6 +84,13 @@ var HelloWorldLayer = cc.Layer.extend({
         this.bird_ = new Bird();
         this.addChild(this.bird_);
 
+        //create monsters
+        var monster = new Monster();
+        this.addChild(monster);
+        monster.sprite_.setPosition(5, visibleRect.height/2);
+        this.monsters_.push(monster);
+
+        //create HUD
         this.initHUD();
     },
     addKeyboard : function(){
@@ -160,6 +168,16 @@ var HelloWorldLayer = cc.Layer.extend({
             }
         }
 
+        //check bird and monster collision
+        for(var i = 0; i < this.monsters_.length; ++i)
+        {
+            var monster = this.monsters_[i];
+            var monsterBB = monster.getAttackArea();
+            if(cc.rectIntersectsRect(monsterBB, birdBoundingBox) && monster.state_ == MonsterState.DANGEROUS)
+            {
+                this.bird_.hurt(monster.getAttackDamage());
+            }
+        }
 
     },
     updateTimerHUD : function(dt){
@@ -202,9 +220,15 @@ var HelloWorldLayer = cc.Layer.extend({
             this.pickItems_[i].update(dt);
         }
 
+        for(var i = 0; i < this.monsters_.length; ++i){
+            this.monsters_[i].update(dt);
+        }
+
         this.checkBirdCollision(dt);
 
         this.bird_.update(dt);
+
+
     }
 });
 
