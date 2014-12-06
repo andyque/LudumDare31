@@ -3,6 +3,48 @@ var HelloWorldLayer = cc.Layer.extend({
     bird_ : null,
     stabs_ : [],
     pickItems_: [],
+    gameTime_ : 0,
+    gameTimeLabel_ : null,
+    isGameStart_ : false,
+    lifeSpriteArray_ : [],
+    initHUD : function(){
+        var winSize = cc.winSize;
+
+
+        this.gameTimeLabel_ = new cc.LabelTTF("0","Arial",20);
+        var labelSize = this.gameTimeLabel_.getContentSize();
+        var gameTimeLabelPosition = new cc.Point(winSize.width - labelSize.width * 2,
+            winSize.height - labelSize.height/2);
+        this.gameTimeLabel_.setPosition(gameTimeLabelPosition.x, gameTimeLabelPosition.y);
+        this.addChild(this.gameTimeLabel_);
+
+
+        var timeIndicatorLabel = new cc.LabelTTF("Time:", "Arial",20);
+        var timeIndicatorLabelSize = timeIndicatorLabel.getContentSize();
+        timeIndicatorLabel.setPosition(gameTimeLabelPosition.x - timeIndicatorLabelSize.width/2 - 20, gameTimeLabelPosition.y);
+        this.addChild(timeIndicatorLabel);
+
+        var birdHealthLabel = new cc.LabelTTF("Life:", "Arial", 20);
+        var healthLabelSize = birdHealthLabel.getContentSize();
+        birdHealthLabel.setPosition(healthLabelSize.width/2 + 5, winSize.height - healthLabelSize.height/2 - 5);
+        this.addChild(birdHealthLabel);
+
+        var startPosition = new cc.Point(birdHealthLabel.getPosition().x + healthLabelSize.width/2 + 25,
+                                birdHealthLabel.getPosition().y);
+        for(var i = 0; i < 10; ++i){
+            var lifeSprite = new cc.Sprite(res.bird_png);
+            var lifeSpriteSize = lifeSprite.getContentSize();
+            var step = lifeSpriteSize.width * 0.2 + 2;
+            lifeSprite.setScale(0.2);
+            lifeSprite.setPosition(startPosition.x + i * step, startPosition.y);
+            this.addChild(lifeSprite);
+            lifeSprite.setVisible(false);
+
+            this.lifeSpriteArray_.push(lifeSprite);
+
+        }
+
+    },
     initGame : function(){
         var visibleRect = cc.visibleRect;
 
@@ -28,6 +70,8 @@ var HelloWorldLayer = cc.Layer.extend({
 
         this.bird_ = new Bird();
         this.addChild(this.bird_);
+
+        this.initHUD();
     },
     addKeyboard : function(){
         var that = this;
@@ -41,6 +85,7 @@ var HelloWorldLayer = cc.Layer.extend({
                     if(key == 32){
 //                        cc.log("jump")
                         that.bird_.tap();
+                        that.isGameStart_ = true;
                     }
                 }
             }, this);
@@ -101,8 +146,30 @@ var HelloWorldLayer = cc.Layer.extend({
 
 
     },
+    updateHUD : function(dt){
+        this.gameTime_ += dt;
+
+        this.gameTimeLabel_.setString(Math.round(this.gameTime_));
+
+        for(var i = 0; i < 10; ++i){
+            var lifeSprite = this.lifeSpriteArray_[i];
+            lifeSprite.setVisible(false);
+        }
+
+        //display bird life
+        var birdLife = this.bird_.blood_;
+        for(var i = 0; i < birdLife; ++i){
+            var lifeSprite = this.lifeSpriteArray_[i];
+            lifeSprite.setVisible(true);
+        }
+    },
 
     update : function(dt){
+        this.updateHUD(dt);
+
+        if(!this.isGameStart_){
+            return;
+        }
         if(this.bird_.isDead_){
             cc.log("game over");
             return;
@@ -114,7 +181,6 @@ var HelloWorldLayer = cc.Layer.extend({
         this.checkBirdCollision(dt);
 
         this.bird_.update(dt);
-
     }
 });
 

@@ -8,6 +8,7 @@ var HIT_TOP_BOUNCING = -20;
 var FALLING_GRAVITY = -1000;
 var JUMP_POWER = 533;
 var BOUNCING_POWER = 220;
+var MAX_LEVEL = 5;
 
 var Bird = cc.Node.extend({
     sprite_ : null,
@@ -17,9 +18,13 @@ var Bird = cc.Node.extend({
     py_ : 0,
     accelerationY_ : 0,
     flyAnimation_ : null,
-    blood_ : 10,
+    blood_ : 1,
     isHurting_ : true,
     hurtTime_ : 0,
+    level_ : 1,
+    powerup_ : 0, //used as self upgrade
+    powerupConfig : [3, 5, 7, 9],
+    levelMaxBlood_ : [1,3,5,7,10],
     ctor : function(){
 
         this._super();
@@ -32,16 +37,18 @@ var Bird = cc.Node.extend({
 
         return true;
     },
+    selfUpgrade : function(){
+        this.level_ = this.level_ + 1;
+        if(this.level_ >= MAX_LEVEL){
+            this.level_ = MAX_LEVEL;
+        }
+        this.maxBlood_ = this.levelMaxBlood_[this.level_-1];
+    },
 
     update : function(dt){
         if(this.isDead_){
             cc.log("dead")
             return;
-        }
-
-        //fixme
-        if(dt <= 0){
-            dt = 1.0/60;
         }
 
         if(!this.isHurting_){
@@ -79,6 +86,7 @@ var Bird = cc.Node.extend({
         }
 
         this.py_ = JUMP_POWER;
+        this.selfUpgrade();
     },
 
     collideWithWall : function(){
@@ -121,6 +129,9 @@ var Bird = cc.Node.extend({
 
     heal : function(factor){
         this.blood_ += factor;
+        if(this.blood_ >= this.maxBlood_){
+            this.blood_ = this.maxBlood_;
+        }
     },
 
     reset : function(){
