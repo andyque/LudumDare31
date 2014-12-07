@@ -3,8 +3,8 @@
  */
 
 var ACTIVE_DURATION=3;
-var INACTIVE_DURATION_MAX=16;
-var INACTIVE_DURATION_MIN=5;
+var INACTIVE_DURATION_MAX=[15, 120, 25, 30];
+var INACTIVE_DURATION_MIN=[5, 17, 9, 11];
 PickItemType = { RICE : 1, WORM : 2};
 
 var PickItem = cc.Node.extend({
@@ -52,8 +52,9 @@ var PickItem = cc.Node.extend({
                if(this.type_ == PickItemType.RICE)  this.inActivate();
            }
        }else{
+            var birdLevel = this.getParent().bird_.level_;
            this.inativeInterval_ += dt;
-           var randomTime = (cc.random0To1() * (INACTIVE_DURATION_MAX - INACTIVE_DURATION_MIN)) + INACTIVE_DURATION_MIN;
+           var randomTime = (cc.random0To1() * (INACTIVE_DURATION_MAX[birdLevel - 1] - INACTIVE_DURATION_MIN[birdLevel -1 ])) + INACTIVE_DURATION_MIN[birdLevel - 1];
            if(this.inativeInterval_ >= randomTime){
                this.randomPosition();
                this.activate();
