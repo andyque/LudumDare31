@@ -10,6 +10,7 @@ var HelloWorldLayer = cc.Layer.extend({
     lifeSpriteArray_ : [],
     monsters_ : [],
     uiSprite_ : null,
+    human_ : null,
     initHUD : function(){
         var winSize = cc.winSize;
 
@@ -19,18 +20,18 @@ var HelloWorldLayer = cc.Layer.extend({
         var gameTimeLabelPosition = new cc.Point(winSize.width - labelSize.width * 2,
             winSize.height - labelSize.height/2);
         this.gameTimeLabel_.setPosition(gameTimeLabelPosition.x, gameTimeLabelPosition.y);
-        this.addChild(this.gameTimeLabel_);
+        this.addChild(this.gameTimeLabel_,1000);
 
 
         var timeIndicatorLabel = new cc.LabelTTF("Time:", "Arial",20);
         var timeIndicatorLabelSize = timeIndicatorLabel.getContentSize();
         timeIndicatorLabel.setPosition(gameTimeLabelPosition.x - timeIndicatorLabelSize.width/2 - 20, gameTimeLabelPosition.y);
-        this.addChild(timeIndicatorLabel);
+        this.addChild(timeIndicatorLabel,1000);
 
         var birdHealthLabel = new cc.LabelTTF("Life:", "Arial", 20);
         var healthLabelSize = birdHealthLabel.getContentSize();
         birdHealthLabel.setPosition(healthLabelSize.width/2 + 5, winSize.height - healthLabelSize.height/2 - 5);
-        this.addChild(birdHealthLabel);
+        this.addChild(birdHealthLabel,1000);
 
         var startPosition = new cc.Point(birdHealthLabel.getPosition().x + healthLabelSize.width/2 + 25,
                                 birdHealthLabel.getPosition().y);
@@ -47,24 +48,24 @@ var HelloWorldLayer = cc.Layer.extend({
 
         }
 
-        this.uiSprite_ = new cc.Sprite(res.ui_png)
-        this.uiSprite_.setAnchorPoint(cc.p(0,0));
-        this.uiSprite_.setPosition(cc.p(0,0));
-        this.uiSprite_.setOpacity(255);
-        this.addChild(this.uiSprite_,1000);
-
-        var self = this;
-        var item1 = new cc.MenuItemImage(res.start_png, res.start_png, function(){
-            self.uiSprite_.removeFromParent();
-        }, this);
-
-        var menu = new cc.Menu(item1);
-        var winSize = cc.director.getWinSize();
-
-        menu.x = winSize.width / 2;
-        menu.y = 40;
-
-        this.uiSprite_.addChild(menu);
+//        this.uiSprite_ = new cc.Sprite(res.ui_png)
+//        this.uiSprite_.setAnchorPoint(cc.p(0,0));
+//        this.uiSprite_.setPosition(cc.p(0,0));
+//        this.uiSprite_.setOpacity(255);
+//        this.addChild(this.uiSprite_,1000);
+//
+//        var self = this;
+//        var item1 = new cc.MenuItemImage(res.start_png, res.start_png, function(){
+//            self.uiSprite_.removeFromParent();
+//        }, this);
+//
+//        var menu = new cc.Menu(item1);
+//        var winSize = cc.director.getWinSize();
+//
+//        menu.x = winSize.width / 2;
+//        menu.y = 40;
+//
+//        this.uiSprite_.addChild(menu);
 
 
         //display bird life
@@ -83,11 +84,11 @@ var HelloWorldLayer = cc.Layer.extend({
 
         var bgSprite = new cc.Sprite(res.background_png);
         bgSprite.setPosition(visibleRect.width/2, visibleRect.height/2);
-        this.addChild(bgSprite);
+        this.addChild(bgSprite,-1);
 
         var bgSprite = new cc.Sprite(res.foreground_png);
         bgSprite.setPosition(visibleRect.width/2, visibleRect.height/2);
-        this.addChild(bgSprite);
+        this.addChild(bgSprite,1);
 
 //        //todo: add all stabs
 //        var stab = new Stab();
@@ -112,6 +113,15 @@ var HelloWorldLayer = cc.Layer.extend({
 
         //create monsters
         this.initMonsters();
+
+        //create human
+        this.human_ = new Human();
+        this.human_.bird_ = this.bird_;
+
+        var bullet = new Bullet();
+        this.human_.addBullet(bullet);
+        this.addChild(this.human_,2);
+
 
         //create HUD
         this.initHUD();
@@ -288,8 +298,7 @@ var HelloWorldLayer = cc.Layer.extend({
     update : function(dt){
         this.updateHUD(dt);
 
-
-
+        this.human_.update(dt);
 
         if(!this.isGameStart_){
             return;
