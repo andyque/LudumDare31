@@ -60,6 +60,10 @@ var HelloWorldLayer = cc.Layer.extend({
         bgSprite.setPosition(visibleRect.width/2, visibleRect.height/2);
         this.addChild(bgSprite);
 
+        var bgSprite = new cc.Sprite(res.foreground_png);
+        bgSprite.setPosition(visibleRect.width/2, visibleRect.height/2);
+        this.addChild(bgSprite);
+
 //        //todo: add all stabs
 //        var stab = new Stab();
 //        this.addChild(stab);
@@ -108,6 +112,11 @@ var HelloWorldLayer = cc.Layer.extend({
         var eagle = new Monster(MonsterType.EAGLE);
         this.addChild(eagle);
         this.monsters_.push(eagle);
+
+        //add human
+        var human = new Monster(MonsterType.HUMANBEING);
+        this.addChild(human);
+        this.monsters_.push(human);
     },
     addTouchHandling : function(){
         cc.eventManager.addListener({
@@ -210,7 +219,7 @@ var HelloWorldLayer = cc.Layer.extend({
         {
             var monster = this.monsters_[i];
             var monsterBB = monster.getAttackArea();
-            if(cc.rectIntersectsRect(monsterBB, birdBoundingBox) && monster.state_ == MonsterState.DANGEROUS)
+            if(cc.rectIntersectsRect(monsterBB, birdBoundingBox) && monster.state_ == MonsterState.ATTACKING)
             {
                 this.bird_.hurt(monster.getAttackDamage());
             }

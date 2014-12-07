@@ -2,7 +2,7 @@
  * Created by guanghui on 12/6/14.
  */
 
-var FacingDirection = { FD_Left : 1, FD_Right : 2}
+FacingDirection = { FD_Left : 1, FD_Right : 2}
 var HURTING_INTERVAL = 1;
 var HIT_TOP_BOUNCING = -20;
 var FALLING_GRAVITY = -1000;
