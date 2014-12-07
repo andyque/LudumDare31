@@ -9,7 +9,13 @@ var res = {
     eagle1_png : "res/images/eagle1.png",
     eagle2_png : "res/images/eagle2.png",
     human_png : "res/images/human.png",
-    monkey_png : "res/images/monkey.png"
+    monkey_png : "res/images/monkey.png",
+    bg_ogg : "res/audio/background.ogg",
+    eagle_ogg : "res/audio/eagle.ogg",
+    jump_ogg : "res/audio/Jump.ogg",
+    die_ogg : "res/audio/die.ogg",
+    pickcoin_ogg : "res/audio/pickCoin.ogg"
+
 };
 
 var g_resources = [];

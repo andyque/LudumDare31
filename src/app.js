@@ -53,6 +53,9 @@ var HelloWorldLayer = cc.Layer.extend({
         }
 
     },
+    startGame : function(){
+       cc.audioEngine.playMusic(res.bg_mp3,true);
+    },
     initGame : function(){
         var visibleRect = cc.visibleRect;
 
@@ -92,6 +95,11 @@ var HelloWorldLayer = cc.Layer.extend({
         this.initHUD();
 
         this.addTouchHandling();
+
+
+        cc.audioEngine.playMusic(res.bg_ogg,true);
+        cc.audioEngine.setMusicVolume(0.4)
+
     },
     initMonsters : function(){
         //add cat
@@ -133,6 +141,7 @@ var HelloWorldLayer = cc.Layer.extend({
 
         target.bird_.tap();
         target.isGameStart_ = true;
+
     },
 
     addKeyboard : function(){
@@ -208,6 +217,7 @@ var HelloWorldLayer = cc.Layer.extend({
                 }else if(item.type_ == PickItemType.WORM){
                     this.bird_.powerup();
                 }
+                cc.audioEngine.playEffect(res.pickcoin_ogg,false);
                 item.inActivate();
             }
         }
