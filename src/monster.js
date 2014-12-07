@@ -66,6 +66,7 @@ var Monster = cc.Node.extend({
         this.winSize_ = cc.winSize;
         this.initPosition();
 
+
         this.playSwingAnimation();
     },
 
@@ -91,7 +92,10 @@ var Monster = cc.Node.extend({
         }else if(this.type_ == MonsterType.MONKEY){
             return this.sprite_.getBoundingBox();
         }else if(this.type_ == MonsterType.EAGLE){
-            return this.sprite_.getBoundingBox();
+            var rect = cc.rect(0, 0, this.spriteSize_.width, this.spriteSize_.height);
+            return cc._rectApplyAffineTransformIn(rect, this.getNodeToParentTransform());
+
+            return rect;
         }else if(this.type_ == MonsterType.HUMANBEING){
             return new cc.Rect(0,0,0,0);
         }
