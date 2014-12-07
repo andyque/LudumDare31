@@ -3,8 +3,8 @@
  */
 
 var ACTIVE_DURATION=3;
-var INACTIVE_DURATION_MAX=[15, 120, 25, 30];
-var INACTIVE_DURATION_MIN=[5, 17, 9, 11];
+var INACTIVE_DURATION_MAX=[15, 25, 30, 45];
+var INACTIVE_DURATION_MIN=[5, 10, 15, 20];
 PickItemType = { RICE : 1, WORM : 2};
 
 var PickItem = cc.Node.extend({
