@@ -100,11 +100,11 @@ var HelloWorldLayer = cc.Layer.extend({
 
         this.monsters_.push(cat);
 
-        //add monkey
-        var monkey = new Monster(MonsterType.MONKEY);
-        this.addChild(monkey);
+        // //add monkey
+        // var monkey = new Monster(MonsterType.MONKEY);
+        // this.addChild(monkey);
 
-        this.monsters_.push(monkey);
+        // this.monsters_.push(monkey);
 
         //add eagle
         var eagle = new Monster(MonsterType.EAGLE);
