@@ -25,8 +25,9 @@ var Monster = cc.Node.extend({
             this.textureName_ = res.human_png;
         }
     },
-    ctor : function(){
+    ctor : function(type){
         this._super();
+        this.type_ = type;
 
         this.initTextureName();
 
@@ -38,14 +39,23 @@ var Monster = cc.Node.extend({
     },
     initPosition : function(){
         if(this.type_ == MonsterType.CAT){
-
             this.sprite_.setPosition(this.winSize_.width - this.spriteSize_.width/2, this.spriteSize_.height/2);
+        }else if(this.type_ == MonsterType.MONKEY){
+            this.sprite_.setPosition(this.spriteSize_.width/2, this.winSize_.height/2);
+        }else if(this.type_ == MonsterType.EAGLE){
+            this.sprite_.setPosition(this.winSize_.width/2, this.winSize_.height);
+
         }
     },
 
-    getAttackArea : function()
-    {
-        return this.sprite_.getBoundingBox();
+    getAttackArea : function(){
+        if(this.type_ == MonsterType.CAT){
+            return this.sprite_.getBoundingBox();
+        }else if(this.type_ == MonsterType.MONKEY){
+            return this.sprite_.getBoundingBox();
+        }else if(this.type_ == MonsterType.EAGLE){
+            return this.sprite_.getBoundingBox();
+        }
     },
 
     switchStates : function()

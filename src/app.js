@@ -84,14 +84,30 @@ var HelloWorldLayer = cc.Layer.extend({
         this.addChild(this.bird_);
 
         //create monsters
-        var monster = new Monster();
-        this.addChild(monster);
-        this.monsters_.push(monster);
+        this.initMonsters();
 
         //create HUD
         this.initHUD();
 
         this.addTouchHandling();
+    },
+    initMonsters : function(){
+        //add cat
+        var cat = new Monster(MonsterType.CAT);
+        this.addChild(cat);
+
+        this.monsters_.push(cat);
+
+        //add monkey
+        var monkey = new Monster(MonsterType.MONKEY);
+        this.addChild(monkey);
+
+        this.monsters_.push(monkey);
+
+        //add eagle
+        var eagle = new Monster(MonsterType.EAGLE);
+        this.addChild(eagle);
+        this.monsters_.push(eagle);
     },
     addTouchHandling : function(){
         cc.eventManager.addListener({
