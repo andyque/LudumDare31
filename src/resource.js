@@ -22,7 +22,10 @@ var res = {
     jump_ogg : "res/audio/Jump.ogg",
     die_ogg : "res/audio/die.ogg",
     pickcoin_ogg : "res/audio/pickCoin.ogg",
-    ui_png : "res/images/ui.png"
+    ui_png : "res/images/ui.png",
+    start_png : "res/images/start.png",
+    replay_png : "res/images/replay.png",
+    gameover_png : "res/images/gameover.png"
 
 };
 

@@ -51,7 +51,20 @@ var HelloWorldLayer = cc.Layer.extend({
         this.uiSprite_.setAnchorPoint(cc.p(0,0));
         this.uiSprite_.setPosition(cc.p(0,0));
         this.uiSprite_.setOpacity(255);
-//        this.addChild(this.uiSprite_,1000);
+        this.addChild(this.uiSprite_,1000);
+
+        var self = this;
+        var item1 = new cc.MenuItemImage(res.start_png, res.start_png, function(){
+            self.uiSprite_.removeFromParent();
+        }, this);
+
+        var menu = new cc.Menu(item1);
+        var winSize = cc.director.getWinSize();
+
+        menu.x = winSize.width / 2;
+        menu.y = 40;
+
+        this.uiSprite_.addChild(menu);
 
 
         //display bird life
