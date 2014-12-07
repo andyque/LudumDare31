@@ -90,7 +90,28 @@ var HelloWorldLayer = cc.Layer.extend({
 
         //create HUD
         this.initHUD();
+
+        this.addTouchHandling();
     },
+    addTouchHandling : function(){
+        cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: this.onTouchBegan,
+            onTouchMoved: null,
+            onTouchEnded: this.onTouchEnded
+        }, this);
+    },
+    onTouchBegan : function(touch, event){
+        return true;
+    },
+    onTouchEnded : function(touch, event){
+        var target = event.getCurrentTarget();
+
+        target.bird_.tap();
+        target.isGameStart_ = true;
+    },
+
     addKeyboard : function(){
         var that = this;
         if( 'keyboard' in cc.sys.capabilities ) {
@@ -100,8 +121,8 @@ var HelloWorldLayer = cc.Layer.extend({
 //                    cc.log("Key down:" + key);
 //                },
                 onKeyReleased:function(key, event) {
+                    //32 is space key
                     if(key == 32){
-//                        cc.log("jump")
                         that.bird_.tap();
                         that.isGameStart_ = true;
                     }

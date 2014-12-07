@@ -13,9 +13,24 @@ var Monster = cc.Node.extend({
     stateChangeInterval_: 0,
     spriteSize_ : null,
     winSize_ : null,
+    textureName_ : "",
+    initTextureName : function(){
+        if(this.type_ == MonsterType.CAT){
+            this.textureName_ = res.cat_png;
+        }else if(this.type_ == MonsterType.EAGLE){
+            this.textureName_ = res.eagle_png;
+        }else if(this.type_ == MonsterType.MONKEY){
+            this.textureName_ = res.monkey_png;
+        }else if(this.type_ == MonsterType.HUMANBEING){
+            this.textureName_ = res.human_png;
+        }
+    },
     ctor : function(){
         this._super();
-        this.sprite_ = new cc.Sprite(res.monster1_png);
+
+        this.initTextureName();
+
+        this.sprite_ = new cc.Sprite(this.textureName_);
         this.addChild(this.sprite_);
         this.spriteSize_ = this.sprite_.getContentSize();
         this.winSize_ = cc.winSize;
