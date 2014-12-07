@@ -88,6 +88,7 @@ var Bird = cc.Node.extend({
         }
 
         this.py_ = JUMP_POWER;
+        cc.audioEngine.playEffect(res.jump_ogg,false);
     },
 
     collideWithWall : function(){
@@ -114,6 +115,7 @@ var Bird = cc.Node.extend({
 
     die : function(){
         this.isDead_ = true;
+        cc.audioEngine.playEffect(res.die_ogg,false)
     },
 
     hurt : function(factor){

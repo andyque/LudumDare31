@@ -134,6 +134,7 @@ var Monster = cc.Node.extend({
                     var self = this;
                     var callback = function(){
                         self.state_ = MonsterState.FRIENDLY;
+                        self.sprite_.setColor(cc.color(255,255,255,255));
                         self.playSwingAnimation();
                     }
                     this.sprite_.stopAllActions();
@@ -145,6 +146,10 @@ var Monster = cc.Node.extend({
 
                     var action = cc.sequence(attackAction, cc.callFunc(callback), moveBack);
                     this.runAction(action);
+
+                    //play attacking music
+                    cc.audioEngine.playEffect(res.eagle_ogg,false);
+
                     this.state_ = MonsterState.ATTACKING;
                 }
             }
