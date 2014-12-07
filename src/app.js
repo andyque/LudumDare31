@@ -1,4 +1,5 @@
 
+
 var HelloWorldLayer = cc.Layer.extend({
     bird_ : null,
 //    stabs_ : [],
@@ -8,6 +9,7 @@ var HelloWorldLayer = cc.Layer.extend({
     isGameStart_ : false,
     lifeSpriteArray_ : [],
     monsters_ : [],
+    uiSprite_ : null,
     initHUD : function(){
         var winSize = cc.winSize;
 
@@ -44,6 +46,13 @@ var HelloWorldLayer = cc.Layer.extend({
             this.lifeSpriteArray_.push(lifeSprite);
 
         }
+
+        this.uiSprite_ = new cc.Sprite(res.ui_png)
+        this.uiSprite_.setAnchorPoint(cc.p(0,0));
+        this.uiSprite_.setPosition(cc.p(0,0));
+        this.uiSprite_.setOpacity(255);
+//        this.addChild(this.uiSprite_,1000);
+
 
         //display bird life
         var birdLife = this.bird_.blood_;

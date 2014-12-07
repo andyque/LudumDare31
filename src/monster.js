@@ -154,7 +154,7 @@ var Monster = cc.Node.extend({
             }
             else if(this.type_ == MonsterType.CAT)
             {
-
+                this.state_ = MonsterState.ATTACKING;
             }
             else
             {

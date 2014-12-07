@@ -21,7 +21,8 @@ var res = {
     eagle_ogg : "res/audio/eagle.ogg",
     jump_ogg : "res/audio/Jump.ogg",
     die_ogg : "res/audio/die.ogg",
-    pickcoin_ogg : "res/audio/pickCoin.ogg"
+    pickcoin_ogg : "res/audio/pickCoin.ogg",
+    ui_png : "res/images/ui.png"
 
 };
 
