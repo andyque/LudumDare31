@@ -14,9 +14,17 @@ var PickItem = cc.Node.extend({
     inativeInterval_ : 0,
     type_ : PickItemType.RICE,
     healValue_ : 1,
-    ctor : function(dt){
+    ctor : function(dt, type){
         this._super();
-        this.sprite_ = new cc.Sprite(res.item1_png);
+        this.type_ = type;
+        if(this.type_ == PickItemType.RICE)
+        {
+            this.sprite_ = new cc.Sprite(res.item1_png);
+        }
+        else
+        {
+            this.sprite_ = new cc.Sprite(res.item2_png);
+        }
         //this.sprite_.setScale(0.6);
         this.sprite_.setPosition(cc.winSize.width/2, cc.winSize.height/1.5);
         this.addChild(this.sprite_);

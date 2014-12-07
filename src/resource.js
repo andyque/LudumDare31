@@ -3,6 +3,7 @@ var res = {
     foreground_png : "res/images/foreground.png",
     bird_png : "res/images/bird1.png",
     item1_png : "res/images/rice.png",
+    item2_png : "res/images/worm.png",
     cat_png : "res/images/cat.png",
     stab_png : "res/images/down_dents.png",
     eagle1_png : "res/images/eagle1.png",

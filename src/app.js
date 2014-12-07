@@ -73,15 +73,13 @@ var HelloWorldLayer = cc.Layer.extend({
         //add pickItem
         var pickItemCount = 5;
         for(var i = 0; i < pickItemCount; ++i ){
-            var pickItem = new PickItem(i);
+            var pickItem = new PickItem(i, PickItemType.RICE);
             this.addChild(pickItem);
             this.pickItems_.push(pickItem);
         }
 
-        var pickItem = new PickItem(0);
+        var pickItem = new PickItem(0, PickItemType.WORM);
         this.addChild(pickItem);
-        pickItem.type_ = PickItemType.WORM;
-        pickItem.getSprite().setColor(cc.color(255,0,0,255));
         this.pickItems_.push(pickItem);
 
         this.bird_ = new Bird();
