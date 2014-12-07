@@ -31,11 +31,26 @@ var Bird = cc.Node.extend({
 
         var winSize = cc.winSize;
 
-        this.sprite_ = new cc.Sprite(res.bird_png);
+        this.sprite_ = new cc.Sprite(res.bird11_png);
         this.sprite_.setPosition(winSize.width/2, winSize.height/2);
+        this.sprite_.runAction(this.getBirdAnimate());
         this.addChild(this.sprite_);
 
         return true;
+    },
+    getBirdAnimate : function(){
+        var animation = new cc.Animation();
+
+        for (var i = 1; i <= 2; i++) {
+            var frameName = "res/images/bird" + this.level_ +  i + ".png";
+            animation.addSpriteFrameWithFile(frameName);
+        }
+        animation.setDelayPerUnit(0.1);
+        animation.setRestoreOriginalFrame(true);
+
+        var action = cc.animate(animation);
+
+        return action.repeatForever();
     },
     selfUpgrade : function(){
         this.level_ = this.level_ + 1;
@@ -144,6 +159,21 @@ var Bird = cc.Node.extend({
         if(this.powerup_ == levelup){
             this.powerup_ = 0;
             this.level_ += 1;
+            if(this.level_ <=4)
+            {
+                var flip = this.sprite_.isFlippedX();
+                var position = this.sprite_.getPosition();
+                this.removeChild(this.sprite_);
+                this.sprite_ = new cc.Sprite(res.bird11_png);
+                this.sprite_.setPosition(position);
+                this.sprite_.setFlippedX(flip);
+                this.sprite_.runAction(this.getBirdAnimate());
+                this.addChild(this.sprite_);
+            }
+            else
+            {
+                this.level_ = 4;
+            }
         }
 
     },
