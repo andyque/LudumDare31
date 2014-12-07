@@ -17,6 +17,8 @@
         "src/stab.js",
         "src/pickitem.js",
         "src/levelManager.js",
-        "src/monster.js"
+        "src/monster.js",
+        "src/human.js",
+        "src/bullet.js"
     ]
 }

@@ -127,11 +127,6 @@ var HelloWorldLayer = cc.Layer.extend({
         var eagle = new Monster(MonsterType.EAGLE);
         this.addChild(eagle);
         this.monsters_.push(eagle);
-
-        //add human
-        var human = new Monster(MonsterType.HUMANBEING);
-        this.addChild(human);
-        this.monsters_.push(human);
     },
     addTouchHandling : function(){
         cc.eventManager.addListener({
