@@ -30,7 +30,12 @@ var Monster = cc.Node.extend({
             var frameName = "res/images/" + frameComponent +  i + ".png";
             animation.addSpriteFrameWithFile(frameName);
         }
-        animation.setDelayPerUnit(0.1);
+        if(this.type_ == MonsterType.CAT){
+            animation.setDelayPerUnit(0.2);
+        }else if(this.type_ = MonsterType.EAGLE){
+            animation.setDelayPerUnit(0.1);
+        }
+        
         animation.setRestoreOriginalFrame(true);
 
         var action = cc.animate(animation);
@@ -38,7 +43,7 @@ var Monster = cc.Node.extend({
         return action.repeatForever();
     },
     playSwingAnimation : function(){
-        if(this.type_ == MonsterType.EAGLE){
+        if(this.type_ == MonsterType.EAGLE || this.type_ == MonsterType.CAT){
             var animate = this.getMonsterAnimate();
             this.sprite_.runAction(animate);
         }
@@ -201,8 +206,6 @@ var Monster = cc.Node.extend({
         if(this.type_ == MonsterType.CAT || this.type_ == MonsterType.EAGLE){
             var moveBy = cc.moveBy(3.3, cc.p(-1 * (this.winSize_.width - this.spriteSize_.width), 0));
             var reverseMoveby = moveBy.reverse();
-
-
 
 
             if(monsterPosition.x > this.winSize_.width/2){
