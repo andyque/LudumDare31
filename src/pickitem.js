@@ -17,11 +17,14 @@ var PickItem = cc.Node.extend({
     ctor : function(dt){
         this._super();
         this.sprite_ = new cc.Sprite(res.item1_png);
-        this.sprite_.setScale(0.6);
+        //this.sprite_.setScale(0.6);
         this.sprite_.setPosition(cc.winSize.width/2, cc.winSize.height/1.5);
         this.addChild(this.sprite_);
 
-        this.inActivate();
+        //this.inActivate();
+        this.active_ = false;
+        this.activeInterval_ = 0;
+        this.sprite_.setVisible(false);
         this.inativeInterval_ = dt;
 
     },
@@ -51,17 +54,34 @@ var PickItem = cc.Node.extend({
     },
 
     inActivate : function(){
-        this.active_ = false;
-        this.setVisible(false);
-        this.activeInterval_=0;
-        this.inativeInterval_=0;
+        var item = this;
+        var callback = function() { 
+          item.sprite_.setVisible(false);
+        }
+        var action = cc.sequence(cc.scaleTo(0.3,0), cc.callFunc(callback));
+        this.active_ = false; 
+        this.activeInterval_= -0.3;
+        this.inativeInterval_= -0.3;
+        this.sprite_.runAction(action);
+
     },
 
     activate : function(){
-        this.active_ = true;
-        this.setVisible(true);
-        this.activeInterval_=0;
-        this.inativeInterval_=0;
+        var item = this;
+        var callback = function() { 
+          item.active_ = true; 
+        }
+        //var action = cc.sequence(cc.show(), cc.scaleTo(1,1), cc.callFunc(callback));
+        var action = cc.sequence(cc.scaleTo(1,0.6), cc.callFunc(callback));
+        this.sprite_.setVisible(true);
+        this.sprite_.setScale(0);
+        this.activeInterval_ = -1;
+        this.inativeInterval_ = -1;
+        this.sprite_.runAction(action);
+        // this.active_ = true;
+        // this.setVisible(true);
+        // this.activeInterval_=0;
+        // this.inativeInterval_=0;
     },
 
     isActive : function(){
