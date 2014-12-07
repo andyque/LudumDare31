@@ -24,7 +24,7 @@ var Bird = cc.Node.extend({
     level_ : 1,
     powerup_ : 0, //used as self upgrade
     powerupConfig : [1, 2, 3, 4],
-    levelMaxBlood_ : [1,3,5,7,10],
+    levelMaxBlood_ : [2,3,5,7,10],
     ctor : function(){
 
         this._super();
