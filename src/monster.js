@@ -9,7 +9,7 @@ var Monster = cc.Node.extend({
     sprite_ : null,
     type_: MonsterType.CAT,
     state_ : MonsterState.FRIENDLY,
-    stateChangeDuration_: [4, 10],
+    stateChangeDuration_: [[10, 10], [8, 10], [5, 8], [3, 5]],
 
     stateChangeInterval_: 0,
     spriteSize_ : null,
@@ -186,7 +186,10 @@ var Monster = cc.Node.extend({
     update : function(dt)
     {
         this.stateChangeInterval_ += dt;
-        var changeIntelval = cc.random0To1() * (this.stateChangeDuration_[1] - this.stateChangeDuration_[0]) + this.stateChangeDuration_[0];
+        var birdLevel = this.getParent().bird_.level_;
+        var duration = this.stateChangeDuration_[birdLevel];
+        var random = cc.random0To1();
+        var changeIntelval =  random * duration[1] + (1.0 - random) * duration[0];
         if(this.stateChangeInterval_ >= changeIntelval)
         {
             this.stateChangeInterval_ = 0;
