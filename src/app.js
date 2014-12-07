@@ -96,7 +96,7 @@ var HelloWorldLayer = cc.Layer.extend({
 //        this.stabs_.push(stab);
 
         //add pickItem
-        var pickItemCount = 5;
+        var pickItemCount = 3;
         for(var i = 0; i < pickItemCount; ++i ){
             var pickItem = new PickItem(i, PickItemType.RICE);
             this.addChild(pickItem);
