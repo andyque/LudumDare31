@@ -9,7 +9,8 @@ var Monster = cc.Node.extend({
     sprite_ : null,
     type_: MonsterType.CAT,
     state_ : MonsterState.FRIENDLY,
-    stateChangeDuration_: [3, 5, 5, 9],
+    stateChangeDuration_: [4, 10],
+
     stateChangeInterval_: 0,
     spriteSize_ : null,
     winSize_ : null,
@@ -185,7 +186,8 @@ var Monster = cc.Node.extend({
     update : function(dt)
     {
         this.stateChangeInterval_ += dt;
-        if(this.stateChangeInterval_ >= this.stateChangeDuration_[this.type_ - 1 ])
+        var changeIntelval = cc.random0To1() * (this.stateChangeDuration_[1] - this.stateChangeDuration_[0]) + this.stateChangeDuration_[0];
+        if(this.stateChangeInterval_ >= changeIntelval)
         {
             this.stateChangeInterval_ = 0;
             this.switchStates();
