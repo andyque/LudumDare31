@@ -48,24 +48,24 @@ var HelloWorldLayer = cc.Layer.extend({
 
         }
 
-//        this.uiSprite_ = new cc.Sprite(res.ui_png)
-//        this.uiSprite_.setAnchorPoint(cc.p(0,0));
-//        this.uiSprite_.setPosition(cc.p(0,0));
-//        this.uiSprite_.setOpacity(255);
-//        this.addChild(this.uiSprite_,1000);
-//
-//        var self = this;
-//        var item1 = new cc.MenuItemImage(res.start_png, res.start_png, function(){
-//            self.uiSprite_.removeFromParent();
-//        }, this);
-//
-//        var menu = new cc.Menu(item1);
-//        var winSize = cc.director.getWinSize();
-//
-//        menu.x = winSize.width / 2;
-//        menu.y = 40;
-//
-//        this.uiSprite_.addChild(menu);
+        this.uiSprite_ = new cc.Sprite(res.ui_png)
+        this.uiSprite_.setAnchorPoint(cc.p(0,0));
+        this.uiSprite_.setPosition(cc.p(0,0));
+        this.uiSprite_.setOpacity(255);
+        this.addChild(this.uiSprite_,1000);
+
+        var self = this;
+        var item1 = new cc.MenuItemImage(res.start_png, res.start_png, function(){
+            self.uiSprite_.removeFromParent();
+        }, this);
+
+        var menu = new cc.Menu(item1);
+        var winSize = cc.director.getWinSize();
+
+        menu.x = winSize.width / 2;
+        menu.y = 40;
+
+        this.uiSprite_.addChild(menu);
 
 
         //display bird life
@@ -298,7 +298,6 @@ var HelloWorldLayer = cc.Layer.extend({
     update : function(dt){
         this.updateHUD(dt);
 
-        this.human_.update(dt);
 
         if(!this.isGameStart_){
             return;
@@ -307,29 +306,33 @@ var HelloWorldLayer = cc.Layer.extend({
 
         if(this.bird_.isDead_){
             //cc.log("game over");
-            var gameOverSprite = new cc.Sprite(res.gameover_png);
-            gameOverSprite.setAnchorPoint(cc.p(0,0));
-            gameOverSprite.setPosition(cc.p(0,0));
-            this.addChild(gameOverSprite,1000);
+            this.scheduleOnce(function(){
+                var gameOverSprite = new cc.Sprite(res.gameover_png);
+                gameOverSprite.setAnchorPoint(cc.p(0,0));
+                gameOverSprite.setPosition(cc.p(0,0));
+                this.addChild(gameOverSprite,1000);
 
 
-            //add score
-            var highscoreLabel = new cc.LabelTTF(Math.round(this.gameTime_), "Arial", 60);
-            highscoreLabel.setPosition(cc.p(cc.winSize.width/2, cc.winSize.height - 60 * 2));
-            gameOverSprite.addChild(highscoreLabel);
+                //add score
+                var highscoreLabel = new cc.LabelTTF(Math.round(this.gameTime_), "Arial", 60);
+                highscoreLabel.setPosition(cc.p(cc.winSize.width/2, cc.winSize.height - 60 * 2));
+                gameOverSprite.addChild(highscoreLabel);
 
-            var self = this;
-            var item1 = new cc.MenuItemImage(res.replay_png, res.replay_png, function(){
-                cc.director.runScene(new HelloWorldScene());
-            }, this);
+                var self = this;
+                var item1 = new cc.MenuItemImage(res.replay_png, res.replay_png, function(){
+                    cc.director.runScene(new HelloWorldScene());
+                }, this);
 
-            var menu = new cc.Menu(item1);
-            var winSize = cc.director.getWinSize();
+                var menu = new cc.Menu(item1);
+                var winSize = cc.director.getWinSize();
 
-            menu.x = winSize.width / 2;
-            menu.y = 40 * 2;
+                menu.x = winSize.width / 2;
+                menu.y = 40 * 2;
 
-            gameOverSprite.addChild(menu);
+                gameOverSprite.addChild(menu);
+
+            },1.0);
+
             this.unscheduleUpdate();
 
             return;
@@ -337,6 +340,7 @@ var HelloWorldLayer = cc.Layer.extend({
         this.updateMonster(dt);
 
         this.updateTimerHUD(dt);
+        this.human_.update(dt);
 
 
         for(var i = 0; i < this.pickItems_.length; ++i){
