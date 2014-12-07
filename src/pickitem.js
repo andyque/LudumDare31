@@ -31,7 +31,7 @@ var PickItem = cc.Node.extend({
     randomPosition : function(){
         var spriteContentSize = this.sprite_.getContentSize();
         var randomX = cc.random0To1() * (cc.winSize.width - spriteContentSize.width) + spriteContentSize.width/2;
-        var randomY = cc.random0To1() * (cc.winSize.height - spriteContentSize.height) + spriteContentSize.height/2;
+        var randomY = cc.random0To1() * (cc.winSize.height - spriteContentSize.height - 20) + spriteContentSize.height/2 + 20;
         this.sprite_.setPosition(randomX, randomY);
     },
     update : function(dt){

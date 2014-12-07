@@ -62,7 +62,6 @@ var HelloWorldLayer = cc.Layer.extend({
 
 //        //todo: add all stabs
         var stab = new Stab();
-        stab.getSprite().setPosition(0,0);
         this.addChild(stab);
 
         this.stabs_.push(stab);

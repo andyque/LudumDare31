@@ -9,7 +9,7 @@ var Stab = cc.Node.extend({
 
 
         this.sprite_ = new cc.Sprite(res.stab_png);
-        this.sprite_.setPosition(200,200);
+        this.sprite_.setPosition(0,-10);
         this.addChild(this.sprite_);
     },
     getSprite : function(){
