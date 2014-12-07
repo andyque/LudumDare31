@@ -12,6 +12,7 @@ Human = cc.Node.extend({
     state_ : HumanState.Spawn,
     bulletsArray_ : [],
     shootingCount_ : 0,
+    bulletCountConfig_ : [1,2,2,3],
     bird_ : null,
     ctor : function(){
         this._super();
@@ -19,6 +20,10 @@ Human = cc.Node.extend({
         this.sprite_.setPosition(cc.p(-10,-10));
         this.addChild(this.sprite_);
 
+        {
+            this.bulletsArray_ = [];
+
+        }
 
     },
     addBullet : function(bullet){
@@ -35,6 +40,13 @@ Human = cc.Node.extend({
     },
     update : function(dt){
         this.updateBullet(dt);
+
+        var bulletCount = this.bulletCountConfig_[this.bird_.level_-1];
+        if(bulletCount > this.bulletsArray_.length ){
+            var bullet = new Bullet();
+            this.addBullet(bullet);
+            cc.log("add bullets")
+        }
 
         if(this.state_ == HumanState.Spawn){
             this.spawnRate_ += dt;

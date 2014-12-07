@@ -34,7 +34,7 @@ Bullet = cc.Node.extend({
         destionPos = cc.pNormalize(destionPos);
 
 
-        var time =  2000 / 700;
+        var time =  2000 / 960;
         this.sprite_.setVisible(true);
 
         var self = this;
