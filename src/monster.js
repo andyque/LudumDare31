@@ -2,7 +2,7 @@
  * Created by guanghui on 12/6/14.
  */
 
-MonsterType = {CAT : 1, MONKEY : 2, EAGLE : 3, HUMANBEING : 4}
+MonsterType = {CAT : 1, EAGLE : 2, HUMANBEING : 3}
 MonsterState = {DANGEROUS : 0, FRIENDLY : 1, ATTACKING : 2}
 
 var Monster = cc.Node.extend({
@@ -48,8 +48,6 @@ var Monster = cc.Node.extend({
             this.textureName_ = res.cat_png;
         }else if(this.type_ == MonsterType.EAGLE){
             this.textureName_ = res.eagle1_png;
-        }else if(this.type_ == MonsterType.MONKEY){
-            this.textureName_ = res.monkey_png;
         }else if(this.type_ == MonsterType.HUMANBEING){
             this.textureName_ = res.human_png;
         }
@@ -73,8 +71,6 @@ var Monster = cc.Node.extend({
     initPosition : function(){
         if(this.type_ == MonsterType.CAT){
             this.setPosition(this.winSize_.width - this.spriteSize_.width/2, this.spriteSize_.height/2);
-        }else if(this.type_ == MonsterType.MONKEY){
-            this.setPosition(this.spriteSize_.width/2, this.winSize_.height/2);
         }else if(this.type_ == MonsterType.EAGLE){
             this.setPosition(this.winSize_.width - this.spriteSize_.width/2, this.winSize_.height);
         }else if(this.type_ == MonsterType.HUMANBEING){
@@ -88,8 +84,6 @@ var Monster = cc.Node.extend({
 
     getAttackArea : function(){
         if(this.type_ == MonsterType.CAT){
-            return this.sprite_.getBoundingBox();
-        }else if(this.type_ == MonsterType.MONKEY){
             return this.sprite_.getBoundingBox();
         }else if(this.type_ == MonsterType.EAGLE){
             var rect = cc.rect(0, 0, this.spriteSize_.width, this.spriteSize_.height);
@@ -157,10 +151,6 @@ var Monster = cc.Node.extend({
             {
 
             }
-            else if(this.type_ == MonsterType.MONKEY)
-            {
-
-            }
             else
             {
                 //human
@@ -176,10 +166,6 @@ var Monster = cc.Node.extend({
 
             }
             else if(this.type_ == MonsterType.CAT)
-            {
-
-            }
-            else if(this.type_ == MonsterType.MONKEY)
             {
 
             }
