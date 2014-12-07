@@ -186,6 +186,15 @@ var HelloWorldLayer = cc.Layer.extend({
         // 1. super init first
         this._super();
 
+        {
+            this.pickItems_ = [];
+            this.gameTime_ = 0;
+            this.gameTimeLabel_ = null;
+            this.isGameStart_ = false;
+            this.lifeSpriteArray_ = [];
+            this.monsters_ = [];
+            this.uiSprite_ = null;
+        }
 
         this.initGame();
 
