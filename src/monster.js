@@ -11,11 +11,21 @@ var Monster = cc.Node.extend({
     state_ : MonsterState.FRIENDLY,
     stateChangeDuration_: [5, 5, 5, 5],
     stateChangeInterval_: 0,
+    spriteSize_ : null,
+    winSize_ : null,
     ctor : function(){
         this._super();
         this.sprite_ = new cc.Sprite(res.monster1_png);
         this.addChild(this.sprite_);
-        this.sprite_.setColor(cc.color(0,255,0,255));
+        this.spriteSize_ = this.sprite_.getContentSize();
+        this.winSize_ = cc.winSize;
+        this.initPosition();
+    },
+    initPosition : function(){
+        if(this.type_ == MonsterType.CAT){
+
+            this.sprite_.setPosition(this.winSize_.width - this.spriteSize_.width/2, this.spriteSize_.height/2);
+        }
     },
 
     getAttackArea : function()
@@ -26,7 +36,6 @@ var Monster = cc.Node.extend({
     switchStates : function()
     {
         this.state_ = (this.state_ == MonsterState.FRIENDLY) ? MonsterState.DANGEROUS : MonsterState.FRIENDLY;
-        this.sprite_.setColor((this.state_ == MonsterState.FRIENDLY) ? cc.color(0, 255, 0, 255) : cc.color(0, 255, 255, 255));
     },
 
     update : function(dt)
@@ -37,6 +46,8 @@ var Monster = cc.Node.extend({
             this.stateChangeInterval_ = 0;
             this.switchStates();
         }
+
+        this.walk();
     },
 
     getAttackDamage : function()
@@ -44,7 +55,23 @@ var Monster = cc.Node.extend({
       return 1;
     },
 
-    emptyFunction : function(){
+    walk : function(){
+        var monsterPosition = this.sprite_.getPosition();
+        if(this.type_ == MonsterType.CAT){
+            var moveBy = cc.moveBy(3.3, cc.p(-1 * (this.winSize_.width - this.spriteSize_.width), 0));
+            var reverseMoveby = moveBy.reverse();
+            if(monsterPosition.x > this.winSize_.width/2){
+                if(this.sprite_.getNumberOfRunningActions() == 0){
+                    this.sprite_.setFlippedX(false);
+                    this.sprite_.runAction(moveBy);
+                }
+            }else{
+                if(this.sprite_.getNumberOfRunningActions() == 0){
+                    this.sprite_.setFlippedX(true);
+                    this.sprite_.runAction(reverseMoveby);
+                }
+            }
 
+        }
     }
 })

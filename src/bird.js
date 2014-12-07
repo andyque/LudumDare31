@@ -68,6 +68,8 @@ var Bird = cc.Node.extend({
         var halfHeight = this.sprite_.getContentSize().height/2;
         if(pt.y  <= halfHeight ){
             pt.y = halfHeight;
+            //todo: add audio
+            this.hurt(1.0);
         }
 
         //don't let bird jump out of screen
