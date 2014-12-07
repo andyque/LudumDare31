@@ -50,7 +50,7 @@ Human = cc.Node.extend({
 
         if(this.state_ == HumanState.Spawn){
             this.spawnRate_ += dt;
-            if(this.spawnRate_ > 3){
+            if(this.spawnRate_ > 5){
                 //determine which spawn position
                 var randomPos = cc.random0To1();
                 var spawnPosition;
